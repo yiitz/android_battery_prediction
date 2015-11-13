@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Battery</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="charge_remain">Charge remain time:</string>
+    <string name="discharge_remain">Disharge remain time:</string>
+
+</resources>

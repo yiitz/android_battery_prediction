@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">电量预测</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="charge_remain">充电剩余时间：</string>
+    <string name="discharge_remain">预计电池可用时间：</string>
+
+</resources>

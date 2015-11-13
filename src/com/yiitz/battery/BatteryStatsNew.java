@@ -5,7 +5,7 @@ import java.lang.reflect.Method;
 
 import android.content.Context;
 
-public class BatteryStatsNew implements IBatteryStats {
+class BatteryStatsNew implements IBatteryStats {
 	private Object batteryStatsStubObject;
 	private Class<?> batteryStatsStubClass;
 

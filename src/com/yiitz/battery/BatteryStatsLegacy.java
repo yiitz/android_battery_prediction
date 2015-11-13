@@ -7,7 +7,7 @@ import android.content.IntentFilter;
 import android.os.BatteryManager;
 import android.os.SystemClock;
 
-public class BatteryStatsLegacy implements IBatteryStats {
+class BatteryStatsLegacy implements IBatteryStats {
 	private boolean isCharging;
 
 	private int mLastDischargeStepLevel = -1;

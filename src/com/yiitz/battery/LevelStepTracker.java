@@ -1,6 +1,6 @@
 package com.yiitz.battery;
 
-public class LevelStepTracker {
+class LevelStepTracker {
     private static final int MAX_LEVEL_STEPS = 200;
 
     public long mLastStepTime;

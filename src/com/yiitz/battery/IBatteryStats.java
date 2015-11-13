@@ -1,6 +1,6 @@
 package com.yiitz.battery;
 
-public interface IBatteryStats {
+interface IBatteryStats {
 	public long computeBatteryTimeRemaining();
 	public long computeChargeTimeRemaining();
 	

@@ -12,7 +12,7 @@ class LevelStepTracker {
         init();
     }
     
-    public void init() {
+    public final void init() {
         mLastStepTime = -1;
         mNumStepDurations = 0;
 	}

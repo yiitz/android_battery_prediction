@@ -26,7 +26,17 @@ class BatteryStatsNew implements IBatteryStats {
 		try {
 			long time = (Long) batteryStatsStubClass.getMethod("computeBatteryTimeRemaining").invoke(batteryStatsStubObject);
 			return time;
-		} catch (Exception e) {
+		} catch (NoSuchMethodException e) {
+			e.printStackTrace();
+			return -1;
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+			return -1;
+		} catch (IllegalArgumentException e) {
+			e.printStackTrace();
+			return -1;
+		} catch (InvocationTargetException e) {
+			e.printStackTrace();
 			return -1;
 		}
 	}
@@ -36,7 +46,17 @@ class BatteryStatsNew implements IBatteryStats {
 		try {
 			long time = (Long) batteryStatsStubClass.getMethod("computeChargeTimeRemaining").invoke(batteryStatsStubObject);
 			return time;
-		} catch (Exception e) {
+		} catch (NoSuchMethodException e) {
+			e.printStackTrace();
+			return -1;
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+			return -1;
+		} catch (IllegalArgumentException e) {
+			e.printStackTrace();
+			return -1;
+		} catch (InvocationTargetException e) {
+			e.printStackTrace();
 			return -1;
 		}
 	}

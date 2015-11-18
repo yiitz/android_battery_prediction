@@ -28,7 +28,7 @@ public class MainActivity extends Activity {
 		setContentView(R.layout.activity_main);
 		textView = (TextView) findViewById(R.id.textView);
 
-		Intent intent =createExplicitFromImplicitIntent(getApplicationContext(), new Intent("com.yiitz.battery.BatteryService"));
+		Intent intent = createExplicitFromImplicitIntent(getApplicationContext(), new Intent("com.yiitz.battery.BatteryService"));
 		startService(intent);
 		bindService(intent, conn, Context.BIND_AUTO_CREATE);
 	}

@@ -33,10 +33,10 @@ public class BatteryService extends Service {
 	public void onCreate() {
 		super.onCreate();
 
-		batteryStats = getProperBatteryStats();
+		batteryStats = buildProperBatteryStats();
 	}
 
-	private IBatteryStats getProperBatteryStats() {
+	private IBatteryStats buildProperBatteryStats() {
 
 		if (VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
 			try {

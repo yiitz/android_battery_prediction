@@ -74,17 +74,25 @@ class BatteryStatsLegacy implements IBatteryStats {
 			}
 		}
 	};
-	
+
 	private void onPowerConnected() {
 		isCharging = true;
 		mLastChargeStepLevel = level;
-		mDischargeStepTracker.init();
+		mChargeStepTracker.init();
 	}
+	
 	private void onPowerDisconnected() {
 		isCharging = false;
 		mLastDischargeStepLevel = level;
-		mChargeStepTracker.init();
+		if (shouldResetState()) {
+			mDischargeStepTracker.init();
+		}
 	}
+	
+	private boolean shouldResetState(){
+		return level >= 90 || (mLastChargeStepLevel <=20 && level >= 80);
+	}
+	
 	private void onPowerChanged() {
 		if (isCharging) {
 			if (mLastChargeStepLevel < level) {

@@ -12,13 +12,14 @@ class BatteryStatsLegacy implements IBatteryStats {
 
 	private int mLastDischargeStepLevel = -1;
 	private int mLastChargeStepLevel = -1;
+	private int mFirstChargeStepLevel = -1;
 
 	private int level = -1;
 	private final int maxLevel;
 
 	final LevelStepTracker mDischargeStepTracker = new LevelStepTracker();
 	final LevelStepTracker mChargeStepTracker = new LevelStepTracker();
-	
+
 	private Context context;
 
 	public BatteryStatsLegacy(Context context) {
@@ -32,7 +33,7 @@ class BatteryStatsLegacy implements IBatteryStats {
 		} else {
 			mLastDischargeStepLevel = level;
 		}
-		
+
 		registerReceiver();
 	}
 
@@ -45,16 +46,16 @@ class BatteryStatsLegacy implements IBatteryStats {
 	public long computeChargeTimeRemaining() {
 		return (maxLevel - level) * mChargeStepTracker.computeTimePerLevel();
 	}
-	
+
 	private void registerReceiver() {
 		IntentFilter intentFilter = new IntentFilter();
 		intentFilter.addAction(Intent.ACTION_BATTERY_CHANGED);
 		intentFilter.addAction(Intent.ACTION_POWER_CONNECTED);
 		intentFilter.addAction(Intent.ACTION_POWER_DISCONNECTED);
-		
+
 		context.registerReceiver(batteryChangedReceiver, intentFilter);
 	}
-	
+
 	private void unregisterReceiver() {
 		context.unregisterReceiver(batteryChangedReceiver);
 	}
@@ -63,13 +64,13 @@ class BatteryStatsLegacy implements IBatteryStats {
 		@Override
 		public void onReceive(Context arg0, Intent intent) {
 			String action = intent.getAction();
-			level = intent.getIntExtra(BatteryManager.EXTRA_LEVEL, 0);
-			
+
 			if (action == Intent.ACTION_POWER_CONNECTED) {
 				onPowerConnected();
 			} else if (action == Intent.ACTION_POWER_DISCONNECTED) {
 				onPowerDisconnected();
 			} else if (action == Intent.ACTION_BATTERY_CHANGED) {
+				level = intent.getIntExtra(BatteryManager.EXTRA_LEVEL, 0);
 				onPowerChanged();
 			}
 		}
@@ -78,9 +79,10 @@ class BatteryStatsLegacy implements IBatteryStats {
 	private void onPowerConnected() {
 		isCharging = true;
 		mLastChargeStepLevel = level;
+		mFirstChargeStepLevel = level;
 		mChargeStepTracker.init();
 	}
-	
+
 	private void onPowerDisconnected() {
 		isCharging = false;
 		mLastDischargeStepLevel = level;
@@ -88,11 +90,11 @@ class BatteryStatsLegacy implements IBatteryStats {
 			mDischargeStepTracker.init();
 		}
 	}
-	
-	private boolean shouldResetState(){
-		return level >= 90 || (mLastChargeStepLevel <=20 && level >= 80);
+
+	private boolean shouldResetState() {
+		return level >= 90 || (mFirstChargeStepLevel <= 20 && level >= 80);
 	}
-	
+
 	private void onPowerChanged() {
 		if (isCharging) {
 			if (mLastChargeStepLevel < level) {
@@ -101,8 +103,7 @@ class BatteryStatsLegacy implements IBatteryStats {
 			}
 		} else {
 			if (mLastDischargeStepLevel > level) {
-				mDischargeStepTracker.addLevelSteps(mLastDischargeStepLevel - level,
-						SystemClock.elapsedRealtime());
+				mDischargeStepTracker.addLevelSteps(mLastDischargeStepLevel - level, SystemClock.elapsedRealtime());
 				mLastDischargeStepLevel = level;
 			}
 		}
